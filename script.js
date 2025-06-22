@@ -1,22 +1,35 @@
 const people = [
 	{
-		name: 'পারভেজ',
+		name: 'মাইন উদ্দিন @ পারভেজ',
 		AsamiNo: 1,
-		fatherName: 'মাইন উদ্দিন @ পারভেজ',
+		fatherName: 'মৃত মান্নান',
 		address: 'বংশীনগর , মির্জাপুর , টাংগাইল',
-		image: './images/Screenshot_2.png',
-		mobile: '01973326253',
-		bloodGroup: 'O+',
-		email: 'monir@example.com',
+		image: './images/main-uddin.jpg',
+		mobile: '',
+		// bloodGroup: 'O+',
+		// email: 'monir@example.com',
 		// facebook: 'https://facebook.com/monir',
-		// more: './parvez.html',
+		viewimage: './images/main-uddin.jpg',
 	},
 	{
 		name: 'হায়দারুজ্জামান @ হায়দার',
 		image: '',
-		mobile: '01888888888',
-		website: 'https://sumi.me',
+		mobile: '01718515514',
 	},
+  {
+		name: '',
+		AsamiNo: 00 ,
+		fatherName: '',
+		address: '',
+		image: '',
+		mobile: '',
+		// bloodGroup: 'O+',
+		// email: 'monir@example.com',
+		// facebook: 'https://facebook.com/monir',
+		viewimage: './images/main-uddin.jpg',
+    viewIdCard : './images/main-uddin.jpg'
+	},
+  
 ];
 
 const container = document.getElementById('profilesContainer');
@@ -36,7 +49,7 @@ people.forEach((person) => {
 
 	// Render all other fields dynamically
 	for (const key in person) {
-		if (['name', 'image', 'facebook', 'more'].includes(key)) continue;
+		if (['name', 'image', 'facebook', 'more', 'viewimage' , 'viewIdCard'].includes(key)) continue;
 
 		const value = person[key];
 		const label = key
@@ -53,8 +66,11 @@ people.forEach((person) => {
 
 	// Other profile link should add like previous
 
-	if (person.more) {
-		card.innerHTML += `<a href="${person.more}" target="_blank">more</a>`;
+	if (person.viewimage) {
+		card.innerHTML += `<a href="${person.viewimage}" target="_blank">View Image</a> </br>`;
+	}
+	if (person.viewIdCard) {
+		card.innerHTML += `<a href="${person.viewIdCard}" target="_blank">View Id Card</a>`;
 	}
 
 	container.appendChild(card);
