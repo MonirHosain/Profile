@@ -5,31 +5,33 @@ const people = [
 		fatherName: 'মৃত মান্নান',
 		address: 'বংশীনগর , মির্জাপুর , টাংগাইল',
 		image: './images/main-uddin.jpg',
-		mobile: '',
+		mobile: 'red',
 		// bloodGroup: 'O+',
 		// email: 'monir@example.com',
-		// facebook: 'https://facebook.com/monir',
+		facebook1: 'https://facebook.com/monir',
 		viewimage: './images/main-uddin.jpg',
 	},
 	{
 		name: 'হায়দারুজ্জামান @ হায়দার',
-		image: '',
+		AsamiNo: 2,
+		image: './images/hyder/hyder1.jpg',
 		mobile: '01718515514',
+		facebook1: 'https://www.facebook.com/profile.php?id=100010133940559',
+		facebook2: 'https://web.facebook.com/haider.sheikh.331096?_rdc=1&_rdr#',
+		viewimage: './hyder.html',
 	},
-  {
+	{
 		name: '',
-		AsamiNo: 00 ,
+		AsamiNo: 0,
 		fatherName: '',
 		address: '',
 		image: '',
 		mobile: '',
-		// bloodGroup: 'O+',
-		// email: 'monir@example.com',
-		// facebook: 'https://facebook.com/monir',
-		viewimage: './images/main-uddin.jpg',
-    viewIdCard : './images/main-uddin.jpg'
+		facebook1: '',
+		facebook2: '',
+		viewimage: '',
+		viewIdCard: '',
 	},
-  
 ];
 
 const container = document.getElementById('profilesContainer');
@@ -49,7 +51,7 @@ people.forEach((person) => {
 
 	// Render all other fields dynamically
 	for (const key in person) {
-		if (['name', 'image', 'facebook', 'more', 'viewimage' , 'viewIdCard'].includes(key)) continue;
+		if (['name', 'image', 'facebook1', 'more', 'viewimage', 'viewIdCard', 'facebook2'].includes(key)) continue;
 
 		const value = person[key];
 		const label = key
@@ -60,8 +62,11 @@ people.forEach((person) => {
 	}
 
 	// Facebook link separately
-	if (person.facebook) {
-		card.innerHTML += `<a href="${person.facebook}" target="_blank">Facebook Profile</a> <br> `;
+	if (person.facebook1) {
+		card.innerHTML += `<a href="${person.facebook1}" target="_blank">Facebook Profile</a> <br> `;
+	}
+	if (person.facebook2) {
+		card.innerHTML += `<a href="${person.facebook2}" target="_blank">Facebook Profile 2</a> <br> `;
 	}
 
 	// Other profile link should add like previous
@@ -69,9 +74,36 @@ people.forEach((person) => {
 	if (person.viewimage) {
 		card.innerHTML += `<a href="${person.viewimage}" target="_blank">View Image</a> </br>`;
 	}
+
 	if (person.viewIdCard) {
 		card.innerHTML += `<a href="${person.viewIdCard}" target="_blank">View Id Card</a>`;
 	}
 
 	container.appendChild(card);
+});
+
+function makeRedTextRed(node) {
+	// Ignore non-text nodes like scripts, styles, inputs
+	if (node.nodeType === Node.TEXT_NODE && node.nodeValue.includes('red')) {
+		const span = document.createElement('span');
+		const parts = node.nodeValue.split(/(red)/); // keep 'red' in result
+		parts.forEach((part) => {
+			if (part === 'red') {
+				const redSpan = document.createElement('span');
+				redSpan.style.color = 'red';
+				redSpan.textContent = part;
+				span.appendChild(redSpan);
+			} else {
+				span.appendChild(document.createTextNode(part));
+			}
+		});
+		node.parentNode.replaceChild(span, node);
+	} else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT'].includes(node.tagName)) {
+		Array.from(node.childNodes).forEach(makeRedTextRed);
+	}
+}
+
+// Run after page is loaded
+document.addEventListener('DOMContentLoaded', () => {
+	makeRedTextRed(document.body);
 });
